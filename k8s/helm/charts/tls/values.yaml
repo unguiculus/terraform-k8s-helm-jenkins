@@ -1,0 +1,17 @@
+issuers:
+# - nameSuffix: prod
+#   kind: ClusterIssuer
+#   server: https://acme-v02.api.letsencrypt.org/directory
+#   email: tls@example.com
+#   solvers: |
+#     - selector: {}
+#       dns01:
+#         route53:
+#           region: eu-central-1
+#           hostedZoneID: ABCDEFGHIJKLMNOP
+
+certificates:
+# - nameSuffix: my-app
+#   issuerNameSuffix: prod
+#   issuerKind: ClusterIssuer
+#   commonName: example.com

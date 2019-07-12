@@ -1,0 +1,52 @@
+{
+  "variables": {
+    "cluster_version": "",
+    "vpc_id": "",
+    "subnet_id": "",
+    "build_timestamp": "{{ isotime }}",
+    "region": "{{ env `AWS_REGION`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{ user `region` }}",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "amazon-eks-node-{{ user `cluster_version` }}-v*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "602401143452"
+        ],
+        "most_recent": true
+      },
+      "ami_name": "eks-ci-cluster-{{ user `cluster_version` }}-{{ user `build_timestamp` | clean_resource_name }}",
+      "ami_description": "EKS Kubernetes Worker AMI based on standard Amazon EKS image",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ssh_pty": true,
+      "vpc_id": "{{ user `vpc_id` }}",
+      "subnet_id": "{{ user `subnet_id` }}",
+      "tags": {
+        "Name": "eks-ci-cluster",
+        "Kubernetes-Version": "{{ user `cluster_version` }}",
+        "Build-Timestamp": "{{ user `build_timestamp` }}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "./provision.sh",
+      "execute_command": "echo '' | sudo -S env {{ .Vars }} {{ .Path }}"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
+}

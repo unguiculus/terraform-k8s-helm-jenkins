@@ -1,0 +1,19 @@
+extraArgs:
+  - --v=5
+
+securityContext:
+  enabled: true
+
+webhook:
+  enabled: false
+
+cainjector:
+  enabled: false
+
+requests:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 20m
+    memory: 32Mi

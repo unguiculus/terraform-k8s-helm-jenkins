@@ -1,0 +1,16 @@
+issuers:
+  - nameSuffix: prod
+    kind: ClusterIssuer
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: no-reply@invalid.com
+    solvers: |
+      - selector: {}
+        dns01:
+          route53:
+            region: eu-central-1
+
+certificates:
+  - nameSuffix: jenkins
+    issuerNameSuffix: prod
+    issuerKind: ClusterIssuer
+    commonName: "{{ .Values.jenkinsDomain }}"

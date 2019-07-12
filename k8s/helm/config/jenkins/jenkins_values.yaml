@@ -1,0 +1,71 @@
+fullnameOverride: jenkins
+
+serviceAccount:
+  master:
+    create: true
+
+  k8s-agent:
+    create: true
+
+rbac:
+  master:
+    create: true
+
+  k8s-agent:
+    create: true
+
+livenessProbe:
+  initialDelaySeconds: 180
+
+resources:
+  requests:
+    cpu: 2
+    memory: 4Gi
+  limits:
+    cpu: 2
+    memory: 4Gi
+
+persistence:
+  enabled: true
+  size: 100Gi
+
+javaOpts: >-
+  -Djenkins.install.runSetupWizard=false
+  -XX:+UnlockExperimentalVMOptions
+  -XX:+UseCGroupMemoryLimitForHeap
+  -XX:MaxRAMFraction=2
+  -XshowSettings:vm
+
+forcePluginUpdates: false
+
+referenceContent:
+  - data:
+      - fileName: plugins.txt
+        fileContent: "{{ .Values.plugins_txt }}"
+      - fileName: jenkins.yaml
+        fileContent: "{{ tpl .Values.jenkins_yaml . }}"
+
+  - relativeDir: init.groovy.d
+    data:
+      - fileName: init.groovy
+        fileContent: "{{ .Values.init_groovy }}"
+
+  - relativeDir: jobdsl
+    data:
+      - fileName: job.groovy
+        fileContent: "{{ .Values.jobdsl_groovy }}"
+
+casc:
+  secrets:
+    ADMIN_USER: admin
+    ADMIN_PASSWORD: secret
+
+test:
+  enabled: false
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  paths:
+    - "/"

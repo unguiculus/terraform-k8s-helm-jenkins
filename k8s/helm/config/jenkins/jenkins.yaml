@@ -1,0 +1,58 @@
+jenkins:
+  securityRealm:
+    local:
+      users:
+        - id: "${ADMIN_USER}"
+          password: "${ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  numExecutors: 0
+  remotingSecurity:
+    enabled: true
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  markupFormatter:
+    rawHtml:
+      disableSyntaxHighlighting: false
+  clouds:
+    - kubernetes:
+        name: kubernetes
+        serverUrl: https://kubernetes.default
+        namespace: {{ .Release.Namespace }}
+        jenkinsUrl: http://{{ include "jenkins.fullname" . }}-master:{{ .Values.service.master.port }}
+        jenkinsTunnel: {{ include "jenkins.fullname" . }}-agent:{{ .Values.service.agent.port }}
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+unclassified:
+  shell:
+    shell: /bin/bash
+  location:
+    url: https://{{ .Values.jenkinsDomain }}
+  timestamperConfig:
+    systemTimeFormat: "'<b>'yyyy-MM-dd HH:mm:ss.SSS'</b> '"
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    allPipelines: true
+  ansiColorBuildWrapper:
+    colorMaps:
+      - name: "xterm"
+        black: "#000000"
+        blackB: "#4C4C4C"
+        blue: "#1E90FF"
+        blueB: "#4682B4"
+        cyan: "#00CDCD"
+        cyanB: "#00FFFF"
+        green: "#00CD00"
+        greenB: "#00FF00"
+        magenta: "#CD00CD"
+        magentaB: "#FF00FF"
+        red: "#CD0000"
+        redB: "#FF0000"
+        white: "#E5E5E5"
+        whiteB: "#FFFFFF"
+        yellow: "#CDCD00"
+        yellowB: "#FFFF00"
+jobs:
+  - file: /var/jenkins_home/jobdsl/job.groovy

@@ -1,0 +1,26 @@
+nameOverride: cluster-autoscaler
+
+image:
+  tag: v1.15.0
+
+deployment:
+  apiVersion: apps/v1
+
+cloudProvider: aws
+sslCertPath: /etc/kubernetes/pki/ca.crt
+
+rbac:
+  create: true
+
+extraArgs:
+  leader-elect: false
+  skip-nodes-with-local-storage: false
+  balance-similar-node-groups: false
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 300Mi
+  requests:
+    cpu: 100m
+    memory: 300Mi

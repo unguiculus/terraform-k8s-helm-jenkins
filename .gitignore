@@ -1,0 +1,9 @@
+.terraform
+.idea
+.vscode
+.settings
+.project
+*.iml
+*.tfstate*
+terraform.tfvars
+infra/packer/manifest.json

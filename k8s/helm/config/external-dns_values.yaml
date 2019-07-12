@@ -1,0 +1,21 @@
+image:
+  tag: v0.5.15
+
+policy: sync
+
+rbac:
+  create: true
+
+txtOwnerId: ext-dns
+txtPrefix: ext-dns-
+
+sources:
+  - ingress
+
+requests:
+  requests:
+    cpu: 5m
+    memory: 16Mi
+  limits:
+    cpu: 20m
+    memory: 32Mi
