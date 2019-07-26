@@ -1,18 +1,30 @@
-import static io.unguiculus.jobdsl.JobUtils.addDefaults
-import static io.unguiculus.jobdsl.JobUtils.addTimestampsWrapper
-
-folderName = 'myjobs'
-
-folder(folderName) {
-    description('My Jobs')
-}
-
-job = freeStyleJob("$folderName/test-job")
-addDefaults(job)
-addTimestampsWrapper(job)
-
-job.with {
-    steps {
-        shell 'echo test'
+pipelineJob('demo-pipeline') {
+    definition {
+        cps {
+            script '''
+                pipeline {
+                    agent {
+                        kubernetes {
+                            yaml """
+                                apiVersion: v1
+                                kind: Pod
+                                spec:
+                                  containers:
+                                    - name: jnlp
+                                      tty: true
+                            """
+                        }
+                    }
+                    stages {
+                        stage('test') {
+                            steps {
+                                echo 'test'
+                            }
+                        }
+                    }
+                }
+            '''.stripIndent()
+            sandbox()
+        }
     }
 }
