@@ -35,24 +35,5 @@ unclassified:
     systemTimeFormat: "'<b>'yyyy-MM-dd HH:mm:ss.SSS'</b> '"
     elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
     allPipelines: true
-  ansiColorBuildWrapper:
-    colorMaps:
-      - name: "xterm"
-        black: "#000000"
-        blackB: "#4C4C4C"
-        blue: "#1E90FF"
-        blueB: "#4682B4"
-        cyan: "#00CDCD"
-        cyanB: "#00FFFF"
-        green: "#00CD00"
-        greenB: "#00FF00"
-        magenta: "#CD00CD"
-        magentaB: "#FF00FF"
-        red: "#CD0000"
-        redB: "#FF0000"
-        white: "#E5E5E5"
-        whiteB: "#FFFFFF"
-        yellow: "#CDCD00"
-        yellowB: "#FFFF00"
 jobs:
   - file: /var/jenkins_home/jobdsl/job.groovy
