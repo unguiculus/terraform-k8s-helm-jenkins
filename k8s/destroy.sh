@@ -11,6 +11,9 @@ readonly TILLER_NAMESPACE=tiller
 export TILLER_NAMESPACE
 
 main() {
+    # shellcheck source=../tools/tools.sh
+    source "$SCRIPT_DIR/../tools/tools.sh"
+
     pushd "$SCRIPT_DIR" > /dev/null
 
     log_start 'Purging Helm charts...'
