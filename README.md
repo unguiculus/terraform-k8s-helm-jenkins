@@ -8,6 +8,7 @@ A complete example for spinning up Jenkins on EKS using Terraform, Packer, and H
 * [Packer](https://www.packer.io)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://helm.sh)
+* [aws-cli](https://aws.amazon.com/de/cli/)
 * AWS account with permissions to create networking, compute, EKS, DNS infrastructure
 
 ## TL;DR
