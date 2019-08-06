@@ -37,7 +37,7 @@ set_kubeconfig() {
     local cluster_name
     cluster_name=$(./terraform/terraform_output.sh compute cluster_name)
 
-    KUBECONFIG="$(pwd)/terraform/compute/kubeconfig_$cluster_name"
+    KUBECONFIG="$(pwd)/terraform/compute/kubeconfig_${cluster_name%%[[:space:]]}"
     export KUBECONFIG
 
     popd > /dev/null
@@ -84,24 +84,31 @@ install_charts() {
 
     local worker_iam_role_arn
     worker_iam_role_arn=$(./terraform_output.sh compute worker_iam_role_arn)
+    worker_iam_role_arn="${worker_iam_role_arn%%[[:space:]]}"
 
     local cert_manager_iam_role_arn
     cert_manager_iam_role_arn=$(./terraform_output.sh compute cert_manager_iam_role_arn)
+    cert_manager_iam_role_arn="${cert_manager_iam_role_arn%%[[:space:]]}"
 
     local domain
     domain=$(./terraform_output.sh dns domain)
+    domain="${domain%%[[:space:]]}"
 
     local external_dns_iam_role_arn
     external_dns_iam_role_arn=$(./terraform_output.sh compute external_dns_iam_role_arn)
+    external_dns_iam_role_arn="${external_dns_iam_role_arn%%[[:space:]]}"
 
     local cluster_autoscaler_iam_role_arn
     cluster_autoscaler_iam_role_arn=$(./terraform_output.sh compute cluster_autoscaler_iam_role_arn)
+    cluster_autoscaler_iam_role_arn="${cluster_autoscaler_iam_role_arn%%[[:space:]]}"
 
     local cluster_name
     cluster_name=$(./terraform_output.sh compute cluster_name)
+    cluster_name="${cluster_name%%[[:space:]]}"
 
     local agent_iam_role_arn
     agent_iam_role_arn=$(./terraform_output.sh compute agent_iam_role_arn)
+    agent_iam_role_arn="${agent_iam_role_arn=%%[[:space:]]}"
 
     popd > /dev/null
 
